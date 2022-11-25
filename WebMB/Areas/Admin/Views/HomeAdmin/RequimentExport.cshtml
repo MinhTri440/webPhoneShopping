@@ -1,0 +1,106 @@
+﻿@model List<WebMB.Context.RequimentExport>
+@{
+    ViewBag.Title = "RequimentExport";
+}
+<main>
+    <h2>The <code>table of</code> requiment export</h2>
+    <h1>Table of Requiment</h1>
+    <table width="auto" class="customers">
+        <tr>
+            <th>No</th>
+            <th>ID Order</th>
+            <th>Detail of Order</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>TimeCreate</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Check</th>
+            <th>Accept</th>
+
+        </tr>
+        @foreach(var item in Model)
+            {
+                <tr>
+                    <th>@item.IdRequiment</th>
+                    <th>@item.OrderID</th>
+                    <th>
+                        @foreach (var item2 in ViewBag.ReviewAdmin)
+                        {
+                            if (item.OrderID == item2.orderDetail.OrderID)
+                            {<div>@item2.Product.name X @item2.orderDetail.Quantity</div>
+                        }
+
+                    }
+                    </th>
+                    <th>
+                        @foreach (var item2 in ViewBag.ReviewAdmin)
+                        {
+                            if (item.OrderID == item2.orderDetail.OrderID)
+                            {<div>@item2.account.address2</div>
+                        }
+
+                    }
+
+                    </th>
+                    <th>
+                        @foreach (var item2 in ViewBag.ReviewAdmin)
+                        {
+                            if (item.OrderID == item2.orderDetail.OrderID)
+                            {<div>@item2.account.phone2</div>
+                        }
+
+                    }
+
+                    </th>
+                    <th>@item.CreateDay</th>
+                    <th>
+                        @{
+                            decimal total = 0;
+                            foreach (var item4 in ViewBag.ReviewAdmin)
+                            {
+                                if (@item.OrderID == item4.orderDetail.OrderID)
+                                {
+                                    total = total + @item4.orderDetail.Quantity * item4.orderDetail.Price;
+
+                                }
+                            }
+                        }
+                        <p>@total</p>
+                    </th>
+                    <th>@item.StatusRequiment</th>
+                    @{if (item.StatusRequiment == 0)
+                        {
+                            <th><a href="CheckStock?OrderID=@item.OrderID"><button>check stock</button></a></th>
+                        }
+                        else if (item.StatusRequiment == 1)
+                        {
+                            <th><p>Enough</p></th>
+
+                        }
+                        else if (item.StatusRequiment == 2)
+                        {
+                            <p>Not Enough</p>
+
+                        }
+                    }
+                    @{
+                        if (item.StatusRequiment == 3)
+                        {
+                            <th><p></p></th>
+                            <th><a href="CreateExport?OrderID=@item.OrderID"><button>Accept</button></a></th>
+                            <th><p></p></th>
+
+                        }
+                        else if (item.StatusRequiment == 4)
+                        {
+                            <th><p></p></th>
+                            <th><p>Canceled</p></th>
+                            <th><p></p></th>
+                        }
+                    }
+
+
+                </tr>
+            }
+

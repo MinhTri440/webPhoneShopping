@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "ManagerOrder";
+}
+@model List<WebMB.Context.Order>
+
+<main>
+    <h2>The <code>table-layout</code> property demo</h2>
+    <h1>A Fancy Table</h1>
+    <table width="auto" class="customers">
+        <tr>
+            <th>Order ID</th>
+            <th>Name</th>
+            <th>Detail of Order</th>
+            <th>DateOrder</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Accept</th>
+            <th>Cancel</th>
+            <th>Warehouse requirement</th>
+        </tr>
+            @foreach (var item in Model)
+            {
+            <tr>
+
+                <th>@item.ID</th>
+                <th>@item.Username</th>
+                <th>
+                    @foreach (var item2 in ViewBag.OrderviewAdmin)
+                    {
+                        if (@item.ID == item2.orderDetail.OrderID)
+                        {
+                            <div>@item2.Product.name   X @item2.orderDetail.Quantity</div>
+                        }
+                    }
+
+                </th>
+                <th>@item.CreateDate</th>
+                <th>
+                    @foreach (var item3 in ViewBag.OrderviewAdmin)
+                    {
+                        if (@item.Username == @item3.account.username)
+                        {
+                            <div>@item3.account.address2</div>
+                            break;
+                        }
+                    }
+
+
+                </th>
+                <th>
+                    @foreach (var item3 in ViewBag.OrderviewAdmin)
+                    {
+                        if (@item.Username == @item3.account.username)
+                        {
+                            <div>@item3.account.phone2</div>
+                            break;
+                        }
+                    }
+                </th>
+                <th>
+                    @{
+                        decimal total = 0;
+                        foreach (var item4 in ViewBag.OrderviewAdmin)
+                        {
+                            if (@item.ID == item4.orderDetail.OrderID)
+                            {
+                                total = total + @item4.orderDetail.Quantity * item4.orderDetail.Price;
+
+                            }
+                        }
+                    }
+                    <p>@total</p>
+                </th>
+                <th>@item.Status</th>
+                @if (item.Status == 2)
+                {
+                    <th><p>Accepted</p></th>
+                    <th><p></p></th>
+                }
+                else if (item.Status == 3)
+                {
+                    <th><p></p></th>
+                    <th><p>Canceled</p></th>
+                }
+                else
+                {
+                    <th><a href="AcceptOrd?OrderID=@item.ID"><button>Accept</button></a></th>
+                    <th><a href="CancelOrder?OrderID=@item.ID"><button>Cancel</button></a></th>
+                }
+
+                @if (item.Status == 0)
+                {
+                    <th><a href="CreateRequiforStock?OrderID=@item.ID"><button>Request</button></a></th>
+
+                }
+                else
+                {
+                    <th>Required</th>
+                }
+
+
+            </tr>
+        }
+
+
+
+
+
+        </table>
+    </main>
+
+
+

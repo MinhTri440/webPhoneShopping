@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WebMobileModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="WebMobileModelStoreContainer">
+    <EntitySet Name="Accounts" EntityType="WebMobileModel.Store.Accounts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Orders" EntityType="WebMobileModel.Store.Orders" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderDetails" EntityType="WebMobileModel.Store.OrderDetails" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Products" EntityType="WebMobileModel.Store.Products" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RequimentExports" EntityType="WebMobileModel.Store.RequimentExports" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="WebMobileModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="Accounts">
+    <Key>
+      <PropertyRef Name="username" />
+    </Key>
+    <Property Name="username" Type="nvarchar" Nullable="false" MaxLength="16" />
+    <Property Name="password" Type="nvarchar" Nullable="true" MaxLength="16" />
+    <Property Name="address" Type="nvarchar" Nullable="true" MaxLength="512" />
+    <Property Name="address2" Type="nvarchar" Nullable="true" MaxLength="512" />
+    <Property Name="phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="phone2" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="type" Type="nvarchar" Nullable="true" MaxLength="16" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="CreateDate" Type="datetime" Nullable="true" />
+    <Property Name="Username" Type="nvarchar" Nullable="true" MaxLength="16" />
+    <Property Name="Status" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="OrderDetails">
+    <Key>
+      <PropertyRef Name="ProductID" />
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="OrderID" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="true" />
+    <Property Name="Price" Type="decimal" Nullable="true" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="img" Type="nvarchar" Nullable="true" MaxLength="100" />
+    <Property Name="description" Type="nvarchar" Nullable="true" MaxLength="500" />
+    <Property Name="price" Type="float" Nullable="true" />
+    <Property Name="count" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="RequimentExports">
+    <Key>
+      <PropertyRef Name="IdRequiment" />
+    </Key>
+    <Property Name="OrderID" Type="int" Nullable="false" />
+    <Property Name="CreateDay" Type="datetime" Nullable="false" />
+    <Property Name="StatusRequiment" Type="int" Nullable="false" />
+    <Property Name="IdRequiment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" Nullable="true" />
+    <Property Name="definition" Type="varbinary(max)" Nullable="true" />
+  </EntityType>
+</Schema>
